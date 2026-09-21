@@ -1,0 +1,28 @@
+import { Router } from 'express';
+import {
+  LocationController,
+  DepartmentController,
+  AuditController,
+  SettingsController,
+} from '../controllers/masterController.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
+import { requirePermission } from '../middlewares/permissionMiddleware.js';
+
+export const locationRouter = Router();
+locationRouter.use(authenticate);
+locationRouter.get('/', requirePermission('masterdata.view'), LocationController.listLocations);
+locationRouter.post('/', requirePermission('masterdata.manage'), LocationController.createLocation);
+
+export const departmentRouter = Router();
+departmentRouter.use(authenticate);
+departmentRouter.get('/', requirePermission('masterdata.view'), DepartmentController.listDepartments);
+departmentRouter.post('/', requirePermission('masterdata.manage'), DepartmentController.createDepartment);
+
+export const auditRouter = Router();
+auditRouter.use(authenticate);
+auditRouter.get('/', requirePermission('audit.view'), AuditController.listAuditLogs);
+
+export const settingsRouter = Router();
+settingsRouter.use(authenticate);
+settingsRouter.get('/', requirePermission('masterdata.view'), SettingsController.listSettings);
+settingsRouter.patch('/:key', requirePermission('masterdata.manage'), SettingsController.updateSetting);

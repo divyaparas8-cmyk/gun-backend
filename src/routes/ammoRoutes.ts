@@ -1,0 +1,17 @@
+import { Router } from 'express';
+import { AmmoController } from '../controllers/ammoController.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
+import { requirePermission } from '../middlewares/permissionMiddleware.js';
+
+const router = Router();
+
+router.use(authenticate);
+
+router.get('/', requirePermission('ammo.view'), AmmoController.listAmmunition);
+router.get('/:id', requirePermission('ammo.view'), AmmoController.getAmmunition);
+router.post('/', requirePermission('ammo.adjust'), AmmoController.createAmmunition);
+router.patch('/:id', requirePermission('ammo.adjust'), AmmoController.updateAmmunition);
+router.post('/:id/adjust-stock', requirePermission('ammo.adjust'), AmmoController.adjustStock);
+router.get('/:id/transactions', requirePermission('ammo.view'), AmmoController.getTransactions);
+
+export default router;

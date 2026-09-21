@@ -1,0 +1,18 @@
+import { Router } from 'express';
+import { GunController } from '../controllers/gunController.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
+import { requirePermission } from '../middlewares/permissionMiddleware.js';
+
+const router = Router();
+
+router.use(authenticate);
+
+router.get('/', requirePermission('gun.view'), GunController.listGuns);
+router.get('/:id', requirePermission('gun.view'), GunController.getGun);
+router.post('/', requirePermission('gun.create'), GunController.createGun);
+router.patch('/:id', requirePermission('gun.edit'), GunController.updateGun);
+router.patch('/:id/maintenance', requirePermission('gun.edit'), GunController.setMaintenance);
+router.patch('/:id/unavailable', requirePermission('gun.edit'), GunController.setUnavailable);
+router.get('/:id/lease-history', requirePermission('gun.view'), GunController.getLeaseHistory);
+
+export default router;

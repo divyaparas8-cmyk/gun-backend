@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { LeaseController } from '../controllers/leaseController.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
+import { requirePermission } from '../middlewares/permissionMiddleware.js';
+const router = Router();
+router.use(authenticate);
+router.get('/', requirePermission('lease.view'), LeaseController.listLeases);
+router.get('/:id', requirePermission('lease.view'), LeaseController.getLease);
+router.post('/', requirePermission('lease.create'), LeaseController.issueGun);
+router.post('/:leaseId/return', requirePermission('lease.return'), LeaseController.returnGun);
+router.patch('/:id/cancel', requirePermission('lease.cancel'), LeaseController.cancelLease);
+router.get('/:id/history', requirePermission('lease.view'), LeaseController.getLeaseHistory);
+export default router;

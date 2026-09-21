@@ -1,0 +1,14 @@
+import { Router } from 'express';
+import { UserController } from '../controllers/userController.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
+import { requirePermission } from '../middlewares/permissionMiddleware.js';
+
+const router = Router();
+
+router.use(authenticate);
+
+router.get('/', requirePermission('users.view'), UserController.listUsers);
+router.post('/', requirePermission('users.manage'), UserController.createUser);
+router.patch('/:id', requirePermission('users.manage'), UserController.updateUser);
+
+export default router;

@@ -1,0 +1,20 @@
+import { Router } from 'express';
+import { ReportController } from '../controllers/reportController.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
+import { requirePermission } from '../middlewares/permissionMiddleware.js';
+
+const router = Router();
+
+router.use(authenticate);
+
+router.get('/available-guns', requirePermission('reports.view'), ReportController.getAvailableGuns);
+router.get('/leased-guns', requirePermission('reports.view'), ReportController.getLeasedGuns);
+router.get('/overdue-returns', requirePermission('reports.view'), ReportController.getOverdueReturns);
+router.get('/lease-history', requirePermission('reports.view'), ReportController.getLeaseHistory);
+router.get('/person-gun-history', requirePermission('reports.view'), ReportController.getPersonGunHistory);
+router.get('/department-guns', requirePermission('reports.view'), ReportController.getDepartmentGuns);
+router.get('/ammunition-stock', requirePermission('reports.view'), ReportController.getAmmunitionStock);
+router.get('/ammunition-usage', requirePermission('reports.view'), ReportController.getAmmunitionUsage);
+router.get('/missing-damaged-items', requirePermission('reports.view'), ReportController.getMissingDamagedItems);
+
+export default router;
