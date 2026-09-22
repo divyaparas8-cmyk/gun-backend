@@ -105,6 +105,7 @@ export const populateComprehensiveData = async () => {
   // 3. Master Departments
   console.log('  -> Seeding Master Departments...');
   const departments = [
+    { name: 'Special Security Forces - Specialized Training Center', nameAr: 'الامداد - مركز التدريب التخصصي قطاع الأمن الخاص', code: 'SSF-TC' },
     { name: 'Public Security Sector', nameAr: 'قطاع الأمن العام', code: 'PSS' },
     { name: 'Criminal Investigations', nameAr: 'الإدارة العامة للمباحث الجنائية', code: 'CID' },
     { name: 'Rescue & Patrol Division', nameAr: 'إدارة دوريات النجدة', code: 'RPD' },
@@ -144,12 +145,12 @@ export const populateComprehensiveData = async () => {
       fullNameAr: 'رائد / ناصر الصباح',
       employeeId: 'KWT-9041',
       phone: '+965 9988 1122',
-      department: 'Special Operations Command',
-      departmentAr: 'قيادة القوات الخاصة',
+      department: 'Special Security Forces - Specialized Training Center',
+      departmentAr: 'الامداد - مركز التدريب التخصصي قطاع الأمن الخاص',
       rank: 'Major',
       rankAr: 'رائد',
-      designation: 'Tactical Unit Commander',
-      designationAr: 'قائد وحدة التدخل السريع',
+      designation: 'Specialized Training Unit Commander',
+      designationAr: 'قائد وحدة التدريب التخصصي والإمداد',
       idDocument: 'CID-28801019921',
       address: 'Al-Bayan Sector, Kuwait',
       addressAr: 'منطقة بيان، الكويت',
