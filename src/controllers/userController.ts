@@ -13,6 +13,7 @@ export class UserController {
           id: true,
           name: true,
           email: true,
+          avatar: true,
           employeeId: true,
           role: true,
           department: true,
@@ -34,7 +35,7 @@ export class UserController {
 
   static async createUser(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
-      const { name, email, employeeId, password, role, department } = req.body;
+      const { name, email, employeeId, password, role, department, avatar } = req.body;
 
       if (!name || !email || !employeeId || !password || !role) {
         throw new AppError('Name, email, employeeId, password, and role are required.', 400, 'MISSING_FIELDS');
@@ -54,6 +55,7 @@ export class UserController {
           email: email.toLowerCase(),
           employeeId: employeeId.toUpperCase(),
           passwordHash,
+          avatar: avatar || null,
           role,
           department: department || 'General Armory Staff',
           status: 'Active',
@@ -62,6 +64,7 @@ export class UserController {
           id: true,
           name: true,
           email: true,
+          avatar: true,
           employeeId: true,
           role: true,
           department: true,
@@ -91,7 +94,7 @@ export class UserController {
   static async updateUser(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     try {
       const id = String(req.params.id);
-      const { name, email, role, department, status, password } = req.body;
+      const { name, email, role, department, status, password, avatar } = req.body;
 
       const existing = await prisma.user.findUnique({ where: { id } });
       if (!existing) {
@@ -104,6 +107,7 @@ export class UserController {
       if (role) updateData.role = role;
       if (department) updateData.department = department;
       if (status) updateData.status = status;
+      if (avatar !== undefined) updateData.avatar = avatar;
       if (password && password.trim() !== '') {
         updateData.passwordHash = await bcrypt.hash(password, 10);
       }
@@ -115,6 +119,7 @@ export class UserController {
           id: true,
           name: true,
           email: true,
+          avatar: true,
           employeeId: true,
           role: true,
           department: true,

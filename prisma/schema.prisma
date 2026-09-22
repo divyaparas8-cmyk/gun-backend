@@ -13,6 +13,7 @@ model User {
   employeeId   String    @unique
   email        String    @unique
   passwordHash String
+  avatar       String?   @db.LongText
   role         String    @default("Viewer")
   department   String
   status       String    @default("Active") // Active, Inactive
