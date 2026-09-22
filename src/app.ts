@@ -23,7 +23,13 @@ export const createApp = () => {
   // Rate limiter for authentication
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // 100 requests per window
+    max: 200, // 200 requests per window
+    skip: (req) =>
+      process.env.NODE_ENV === 'development' ||
+      req.ip === '127.0.0.1' ||
+      req.ip === '::1' ||
+      req.ip === '::ffff:127.0.0.1' ||
+      req.ip === 'localhost',
     message: {
       success: false,
       message: 'Too many authentication attempts from this IP, please try again after 15 minutes.',

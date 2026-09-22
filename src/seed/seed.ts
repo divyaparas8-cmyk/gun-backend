@@ -35,8 +35,8 @@ export const seedDatabase = async () => {
     });
   }
 
-  // 3. Seed System Admin & Standard Authorized Users
-  console.log('  -> Initializing authorized system users...');
+  // 3. Seed System Admin & Standard Authorized Users (4 Roles)
+  console.log('  -> Initializing authorized system users (4 Users)...');
   const systemUsers = [
     {
       id: 'USR-1',

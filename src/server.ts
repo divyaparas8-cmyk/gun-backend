@@ -14,6 +14,19 @@ const startServer = async () => {
     await prisma.$connect();
     console.log('[DATABASE] MySQL (armory_db) connected successfully via Prisma.');
 
+    // Auto-seed initial dataset if database is empty/fresh
+    try {
+      const userCount = await prisma.user.count();
+      const gunCount = await prisma.gun.count();
+      if (userCount === 0 || gunCount === 0) {
+        console.log('[AUTO-INIT] Database has 0 records. Auto-populating Kuwait MOI armory data...');
+        const { populateComprehensiveData } = await import('./seed/populateData.js');
+        await populateComprehensiveData();
+      }
+    } catch (e: any) {
+      console.warn('[AUTO-INIT WARNING] Could not auto-check DB records:', e.message);
+    }
+
     // Start background overdue cron scheduler
     startOverdueCron();
 
